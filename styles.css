@@ -1,0 +1,117 @@
+body, html {
+  height: 100%;
+}
+
+body {
+  background-color: #E7E7E7;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 0;
+}
+
+#game {
+  font-weight: normal;
+  line-height: 1.2em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+#board {
+  flex: 5 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  height: calc( 100% - 30px );
+  width: calc( 100% - 30px );
+  margin: 15px;
+  box-shadow: 0 0 10px #666;
+}
+
+.row {
+  height: 30%;
+  flex: 1 1;
+  display: flex;
+}
+
+.cell {
+  flex: 1 1;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.cell:hover {
+  background-color: rgba(176, 223, 255, 0.46);
+}
+
+.cell.tic:hover, .cell.tac:hover {
+  background-color: inherit;
+  cursor: inherit;
+}
+
+.cell.tic, .cell.tac {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.cell.tic {
+  background-image: url(img/o.png);
+}
+
+.cell.tac {
+  background-image: url(img/x.png);
+}
+
+.cell.solution, #board.finished .cell.solution:hover {
+  background-color: rgb(248, 255, 173);
+}
+
+#board.finished {
+  background-color: rgb(206, 206, 206);
+}
+
+#board.finished .cell:hover {
+  background-color: inherit;
+  cursor: inherit;
+}
+
+
+#controls {
+  flex: 0 0 60px;
+  align-self: center;
+}
+
+#controls .turn img {
+  vertical-align: middle;
+  height: 20px;
+}
+
+#controls .turn {
+  line-height: 20px;
+  vertical-align: middle;
+  background: white;
+  padding: 10px 40px;
+  text-align: center;
+  box-shadow: 0 0 3px #999;
+
+  padding-right: 60px;
+  background-position: center right;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position-x: calc( 100% - 10px );
+}
+
+#controls.myturn .turn {
+  background-image: url(img/o.png);
+}
+#controls.otherturn .turn {
+  background-image: url(img/x.png);
+}
+#controls.finished .turn {
+  display: none;
+}
