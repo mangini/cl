@@ -11,7 +11,7 @@
     this.controlsEl = controlsEl;
     this.state = STATE_MY_MOVE;
     this.winner = 0;
-    this.init()
+    this.init();
   }
 
   Board.prototype.init = function() {
@@ -151,5 +151,6 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  window.board = new Board(document.querySelector('#board'), document.querySelector('#controls'));
+  window.board = new Board(document.querySelector('#board'),
+      document.querySelector('#controls'));
 });
