@@ -48,7 +48,7 @@
     }
     this.board[i] = this.nextPlayer;
 
-    if (checkAvailablePlays.apply(this) && !checkWinners.apply(this)) {
+    if (!checkWinners.apply(this) && checkAvailablePlays.apply(this)) {
       this.nextPlayer = this.nextPlayer * -1;
       callbacks.onTurnChanged && callbacks.onTurnChanged(this);
     } else {

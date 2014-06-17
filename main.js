@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   var gameEl = document.getElementById('game');
-  var boardEl = game.querySelector('.board');
-  var controlsEl = game.querySelector('.controls');
-  var cells = boardEl.querySelectorAll('.cell');
-  var messageEl = controlsEl.querySelector('.message');
+  var cells = game.querySelectorAll('.board .cell');
 
   window.board = new Board();
 
@@ -14,23 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // set click listeners
   Array.prototype.forEach.call(cells, function(e, i) {
     e.setAttribute("board_cell", i );
-    e.addEventListener('click', function() {
+    e.addEventListener('click', function(e) {
       window.board.play(i);
     });
   });
-
-  var restartBt = document.createElement('button');
-
-  controlsEl.querySelector('.restart').addEventListener('click', function() {
-    game.classList.remove('finished');
-    window.board.init();
-    redrawBoard(window.board);
-  });
-
-
-  function onTurnChanged(board) {
-    redrawBoard(board);
-  }
 
   function getPlayerLabel(board, player) {
     switch (player) {
@@ -43,16 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
   function redrawBoard(board) {
     // redraw cell states:
     Array.prototype.forEach.call(cells, function(e, i) {
-      e.classList.remove('solution');
       var state = board.getCellState(i);
-      if (!state) {
-        e.classList.remove('tic');
-        e.classList.remove('tac');
-      } else {
+      if (state) {
         e.classList.add(state == board.PLAYER_1 ? 'tic' : 'tac');
       }
     });
+    drawStatusMessage(board);
+  }
 
+  function drawStatusMessage(board) {
     // redraw "next player" status message:
     var message = '';
     switch (board.getBoardState()) {
@@ -67,20 +50,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         break;
     }
-    messageEl.innerText = message;
+    game.querySelector('.controls .message').innerText = message;
   }
+
+  game.querySelector('.controls .restart').addEventListener('click', function() {
+    game.classList.remove('finished');
+    Array.prototype.forEach.call(cells, function(e, i) {
+      e.classList.remove('solution');
+      e.classList.remove('tic');
+      e.classList.remove('tac');
+    });
+    window.board.init();
+    drawStatusMessage(board);
+  });
 
 
   function handleFinished(board) {
     redrawBoard(board);
     game.classList.add('finished');
-    // if (board.getWinner() == board.PLAYER_1) {
-    //   controlsEl.classList.add('win');
-    // } else if (board.getWinner() == board.PLAYER_2) {
-    //   controlsEl.classList.add('lost');
-    // } else {
-    //   controlsEl.classList.add('draw');
-    // }
     if (board.getWinningCells()) {
       for (var c=0; c < board.getWinningCells().length ; c++) {
         if (board.getWinningCells()[c]) {
